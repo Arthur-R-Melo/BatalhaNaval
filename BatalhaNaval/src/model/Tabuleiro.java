@@ -28,7 +28,13 @@ public class Tabuleiro {
         //TODO
         return true;
     }
-
+    /*
+        Retorna verdadeiro caso atinja um navio e falso caso erre
+    */
+    public boolean recebeTiro(String posicao) {
+        //TODO
+        return false;
+    }
     public int[][] getTab() {
         return tab;
     }
