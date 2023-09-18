@@ -2,13 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package batalhanaval.model;
+package model;
 
 /**
  *
- * @author arthur
+ * @author 0068943
  */
-public class Tabuleiro {
-    public static final int EM_BRANCO = 1, NAVIO = 2, TIRO_AGUA = 3, NAVIO_ACERTADO = 4;
-    private int tab[][];
+public enum Navio {
+    CRUZADOR(2), FRAGATA(3), PORTA_AVIOES(4);
+    
+    private int tam;
+
+    private Navio(int tam) {
+        this.tam = tam;
+    }
+    
+    
+    
 }
