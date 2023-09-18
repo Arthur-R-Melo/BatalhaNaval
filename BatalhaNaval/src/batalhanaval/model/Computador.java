@@ -8,6 +8,6 @@ package batalhanaval.model;
  *
  * @author 0068943
  */
-public class Computador {
+public class Computador extends Jogador{
     
 }
