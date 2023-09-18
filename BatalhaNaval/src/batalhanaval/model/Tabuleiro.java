@@ -6,8 +6,9 @@ package batalhanaval.model;
 
 /**
  *
- * @author 0068943
+ * @author arthur
  */
 public class Tabuleiro {
-    
+    public static final int EM_BRANCO = 1, NAVIO = 2, TIRO_AGUA = 3, NAVIO_ACERTADO = 4;
+    private int tab[][];
 }
