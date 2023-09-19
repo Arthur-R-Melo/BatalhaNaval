@@ -22,7 +22,7 @@ public class Tabuleiro {
         }
     }
     /*
-        The String posicao must be formated as letter(a, b, c, d, e)+number(from 1 to 10) as in a1, b5, e10.
+        A String posicao deve ser formatada como letra(a, b, c, d, e)+ numero (from 1 to 10) como em: a1, b5, e10.
     */
     public boolean posicionaNavio(Navio navio, String posicao, int direcao) {
         //TODO
@@ -31,9 +31,15 @@ public class Tabuleiro {
     /*
         Retorna verdadeiro caso atinja um navio e falso caso erre
     */
-    public boolean recebeTiro(String posicao) {
-        //TODO
-        return false;
+    public boolean recebeTiro(String posicao) {//true = acertou navio | false = não acertou um navio
+        int[] parOrdenado = convertePosicao(posicao);
+        if(this.tab[parOrdenado[0]][parOrdenado[1]] == NAVIO) {
+            this.tab[parOrdenado[0]][parOrdenado[1]] = NAVIO_ACERTADO;
+            return true;
+        }else {
+            this.tab[parOrdenado[0]][parOrdenado[1]] = TIRO_AGUA;
+            return false;
+        }
     }
     private int[] convertePosicao(String posicao) {
         try{
