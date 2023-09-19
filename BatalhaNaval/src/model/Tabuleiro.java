@@ -15,7 +15,7 @@ public class Tabuleiro {
     private int tab[][];
 
     public Tabuleiro() {
-        this.tab = new int[5][10];
+        this.tab = new int[10][5];
         for (int i = 0; i < this.tab.length; i++) {
             for (int j = 0; j < this.tab[i].length; j++) {
                 this.tab[i][j] = EM_BRANCO;
@@ -27,12 +27,27 @@ public class Tabuleiro {
         A String posicao deve ser formatada como letra(a, b, c, d, e)+ numero (from 1 to 10) como em: a1, b5, e10.
      */
     public boolean posicionaNavio(Navio navio, String posicao, int direcao) {
-        //TODO
-        return true;
+        try {
+            int parOrdenado[] = convertePosicao(posicao);
+            switch (direcao) {
+                case HORIZONTAL -> {
+                    
+                }
+                case VERTICAL -> {
+                    
+                }
+                default -> {
+                    return false;
+                }
+            }
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
     }
 
     /*
-        Retorna verdadeiro caso atinja um navio e falso caso erre
+        Retorna verdadeiro caso atinja um navio, falso caso erre e nulo caso ocorra um erro
      */
     public Boolean recebeTiro(String posicao) {//true = acertou navio | false = não acertou um navio
         try {
@@ -49,15 +64,15 @@ public class Tabuleiro {
         }
     }
 
-    private int[] convertePosicao(String posicao) throws NumberFormatException {
+    public static int[] convertePosicao(String posicao) throws NumberFormatException {
         int vet[] = new int[2];
         char y = posicao.charAt(0);
-        vet[0] = (int) y - (int) 'a';
+        vet[1] = (int) y - (int) 'a';
         /*
                 Para converter do caractere para uma posição de 0 a 4 é feito o parse do primeiro caractere da String e subtraido o valor do parse
                 do caractere 2
          */
-        vet[1] = Integer.parseInt(posicao.substring(1)) - 1;
+        vet[0] = Integer.parseInt(posicao.substring(1)) - 1;
         return vet;
     }
 
