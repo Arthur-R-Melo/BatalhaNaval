@@ -35,6 +35,22 @@ public class Tabuleiro {
         //TODO
         return false;
     }
+    private int[] convertePosicao(String posicao) {
+        try{
+            int vet[] = new int[2];
+            char y = posicao.charAt(0);
+            vet[0] = (int)y - (int)'a';
+            /*
+                Para converter do caractere para uma posição de 0 a 4 é feito o parse do primeiro caractere da String e subtraido o valor do parse
+                do caractere 2
+            */
+            vet[1] = Integer.parseInt(posicao.substring(1)) - 1;
+            return vet;
+        }catch(NumberFormatException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
     public int[][] getTab() {
         return tab;
     }
