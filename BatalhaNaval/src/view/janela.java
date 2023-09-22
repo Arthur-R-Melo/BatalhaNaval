@@ -52,7 +52,8 @@ public class janela extends javax.swing.JFrame {
             posicaoTxt.setForeground(new java.awt.Color(230, 230, 230));
             this.jPanel1.add(posicaoTxt);
 
-            posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + (25 - tamChar / 2), referencia.getY() - tamChar - 5);
+            posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + 10,
+                    referencia.getY() - tamChar - 5);
             //define a localizacao do numero paralalelamente ao Panel Tabuleiro de referencia, e calcula para manter um alinhamento
         }
         for (int i = 0; i < 5; i++) {
