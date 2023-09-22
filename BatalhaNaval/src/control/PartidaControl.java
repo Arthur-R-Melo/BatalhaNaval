@@ -8,6 +8,6 @@ package control;
  *
  * @author 0068943
  */
-public class Partida {
+public class PartidaControl {
     
 }
