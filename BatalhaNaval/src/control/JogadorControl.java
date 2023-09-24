@@ -11,12 +11,6 @@ import model.Tabuleiro;
  * @author 0068943
  */
 public class JogadorControl {
-    private Tabuleiro tabuleiro;
-
-    public JogadorControl(Tabuleiro tabuleiro) {
-        this.tabuleiro = tabuleiro;
-    }
-    
     public boolean realizaAtaque() {
         //TODO
         return true;
