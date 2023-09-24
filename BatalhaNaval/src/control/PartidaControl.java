@@ -9,5 +9,8 @@ package control;
  * @author 0068943
  */
 public class PartidaControl {
-    
+    public int realizaJogada() {
+        //TODO
+        return 0;
+    }
 }
