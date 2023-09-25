@@ -2,6 +2,8 @@ package view;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -11,8 +13,9 @@ import javax.swing.JPanel;
  */
 public class janela extends javax.swing.JFrame {
 
-    private JPanel[][] pecasPlayer;
-    private JPanel[][] pecasInimigo;
+    private JPanel[][] jPecasPlayer;
+    private JPanel[][] JPecasIA;
+    private int[] coordAtk;
 
     public janela() {
         initComponents();
@@ -21,19 +24,19 @@ public class janela extends javax.swing.JFrame {
 
     private void config() {
         this.setLocationRelativeTo(null);
-        this.pecasPlayer = this.criaPanelsPecas(this.jTabuleiroPlayer);
-        this.pecasInimigo = this.criaPanelsPecas(this.jTabuleiroInimigo);
+        this.jTabuleiroIA.setVisible(false);
+
+        this.jPecasPlayer = this.criaPanelsPecas(this.jTabuleiroPlayer);
+        this.JPecasIA = this.criaPanelsPecas(this.jTabuleiroIA);
 
         //Setar todas as posicoes como clicaveis
-        for (int i = 0; i < this.pecasPlayer.length; i++) {
-            for (int j = 0; j < this.pecasPlayer[0].length; j++) {
-                this.setPanelClicavel(this.pecasPlayer[i][j]);
-                this.setPanelClicavel(this.pecasInimigo[i][j]);
+        for (JPanel[] vet : this.JPecasIA) {
+            for (JPanel panel : vet) {
+                this.setPanelClicavel(panel);
             }
         }
-        
-        escrevaCoord(this.jTabuleiroInimigo);
-        escrevaCoord(this.jTabuleiroPlayer);
+
+        this.escrevaCoord(this.jTabuleiroPlayer);
 
     }
 
@@ -108,6 +111,10 @@ public class janela extends javax.swing.JFrame {
 
     }
 
+    public int[] getCoordAtk() {
+        return coordAtk;
+    }
+
     private void setPanelClicavel(JPanel panel) {
         panel.addMouseListener(new MouseListener() {
             @Override
@@ -145,7 +152,7 @@ public class janela extends javax.swing.JFrame {
 
         jPanelFundo = new javax.swing.JPanel();
         jTabuleiroPlayer = new javax.swing.JPanel();
-        jTabuleiroInimigo = new javax.swing.JPanel();
+        jTabuleiroIA = new javax.swing.JPanel();
         jPanelPosInicial = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -161,6 +168,10 @@ public class janela extends javax.swing.JFrame {
         jRadioCruazdorPosH = new javax.swing.JRadioButton();
         jRadioCruazdorPosV = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelPlacarIA = new javax.swing.JLabel();
+        jLabelPlacarPlayer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,17 +191,17 @@ public class janela extends javax.swing.JFrame {
             .addGap(0, 255, Short.MAX_VALUE)
         );
 
-        jTabuleiroInimigo.setBackground(new java.awt.Color(0, 0, 204));
-        jTabuleiroInimigo.setPreferredSize(new java.awt.Dimension(510, 255));
+        jTabuleiroIA.setBackground(new java.awt.Color(0, 0, 204));
+        jTabuleiroIA.setPreferredSize(new java.awt.Dimension(510, 255));
 
-        javax.swing.GroupLayout jTabuleiroInimigoLayout = new javax.swing.GroupLayout(jTabuleiroInimigo);
-        jTabuleiroInimigo.setLayout(jTabuleiroInimigoLayout);
-        jTabuleiroInimigoLayout.setHorizontalGroup(
-            jTabuleiroInimigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jTabuleiroIALayout = new javax.swing.GroupLayout(jTabuleiroIA);
+        jTabuleiroIA.setLayout(jTabuleiroIALayout);
+        jTabuleiroIALayout.setHorizontalGroup(
+            jTabuleiroIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 510, Short.MAX_VALUE)
         );
-        jTabuleiroInimigoLayout.setVerticalGroup(
-            jTabuleiroInimigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jTabuleiroIALayout.setVerticalGroup(
+            jTabuleiroIALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 255, Short.MAX_VALUE)
         );
 
@@ -276,6 +287,11 @@ public class janela extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Iniciar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPosInicialLayout = new javax.swing.GroupLayout(jPanelPosInicial);
         jPanelPosInicial.setLayout(jPanelPosInicialLayout);
@@ -347,6 +363,24 @@ public class janela extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(230, 230, 230));
+        jLabel5.setText("Acertos Player:");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(230, 230, 230));
+        jLabel6.setText("Acertos IA:");
+
+        jLabelPlacarIA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelPlacarIA.setForeground(new java.awt.Color(230, 230, 230));
+        jLabelPlacarIA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPlacarIA.setText("0");
+
+        jLabelPlacarPlayer.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelPlacarPlayer.setForeground(new java.awt.Color(230, 230, 230));
+        jLabelPlacarPlayer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPlacarPlayer.setText("0");
+
         javax.swing.GroupLayout jPanelFundoLayout = new javax.swing.GroupLayout(jPanelFundo);
         jPanelFundo.setLayout(jPanelFundoLayout);
         jPanelFundoLayout.setHorizontalGroup(
@@ -354,12 +388,22 @@ public class janela extends javax.swing.JFrame {
             .addGroup(jPanelFundoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabuleiroInimigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                         .addComponent(jTabuleiroPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
-                        .addComponent(jPanelPosInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                        .addComponent(jPanelPosInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                        .addComponent(jTabuleiroIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPlacarIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelPlacarPlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(54, 54, 54))))
         );
         jPanelFundoLayout.setVerticalGroup(
             jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,7 +413,16 @@ public class janela extends javax.swing.JFrame {
                     .addComponent(jPanelPosInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabuleiroPlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jTabuleiroInimigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabuleiroIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabelPlacarPlayer))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabelPlacarIA))))
                 .addContainerGap())
         );
 
@@ -410,6 +463,18 @@ public class janela extends javax.swing.JFrame {
     private void jRadioCruazdorPosVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCruazdorPosVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioCruazdorPosVActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.jButton2.setEnabled(false);
+        this.jInicaPartida();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jInicaPartida() {
+        this.jTabuleiroIA.setVisible(true);
+        this.escrevaCoord(this.jTabuleiroIA);
+    }
 
     /**
      * @param args the command line arguments
@@ -452,6 +517,10 @@ public class janela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelPlacarIA;
+    private javax.swing.JLabel jLabelPlacarPlayer;
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelPosInicial;
     private javax.swing.JRadioButton jRadioCruazdorPosH;
@@ -460,7 +529,7 @@ public class janela extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioFragataPosV;
     private javax.swing.JRadioButton jRadioPortAviaoPosH;
     private javax.swing.JRadioButton jRadioPortAviaoPosV;
-    private javax.swing.JPanel jTabuleiroInimigo;
+    private javax.swing.JPanel jTabuleiroIA;
     private javax.swing.JPanel jTabuleiroPlayer;
     private javax.swing.JTextField jTextCruzadorCoord;
     private javax.swing.JTextField jTextFragataCoord;
