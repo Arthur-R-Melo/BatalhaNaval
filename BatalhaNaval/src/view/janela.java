@@ -2,8 +2,7 @@ package view;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -11,36 +10,42 @@ import javax.swing.JPanel;
  *
  * @author Valtin
  */
-public class janela extends javax.swing.JFrame {
+public class Janela extends javax.swing.JFrame {
 
     private JPanel[][] jPecasPlayer;
     private JPanel[][] JPecasIA;
+    private ArrayList<JLabel> jLabelsCoordPlayer;
+    private ArrayList<JLabel> jLabelsCoordIA;
+
     private int[] coordAtk;
 
-    public janela() {
+    public Janela() {
         initComponents();
         config();
     }
 
     private void config() {
         this.setLocationRelativeTo(null);
-        this.jTabuleiroIA.setVisible(false);
 
         this.jPecasPlayer = this.criaPanelsPecas(this.jTabuleiroPlayer);
         this.JPecasIA = this.criaPanelsPecas(this.jTabuleiroIA);
 
         //Setar todas as posicoes como clicaveis
-        for (JPanel[] vet : this.JPecasIA) {
-            for (JPanel panel : vet) {
-                this.setPanelClicavel(panel);
-            }
-        }
+        this.jLabelsCoordPlayer = this.escrevaCoord(this.jTabuleiroPlayer);
+        this.jLabelsCoordIA = this.escrevaCoord(this.jTabuleiroIA);
 
-        this.escrevaCoord(this.jTabuleiroPlayer);
-
+        this.setVisibleJogada(false);
     }
 
-    private void escrevaCoord(JPanel referencia) {
+    private void setLabelsVisible(ArrayList<JLabel> vet, boolean op) {
+        for (JLabel temp : vet) {
+            temp.setVisible(op);
+        }
+    }
+
+    private ArrayList<JLabel> escrevaCoord(JPanel referencia) {
+        ArrayList vetorLabel = new ArrayList();
+
         int tamChar = 20;
         char letra;
         for (int i = 1; i <= 10; i++) {
@@ -54,6 +59,8 @@ public class janela extends javax.swing.JFrame {
             posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + 10,
                     referencia.getY() - tamChar - 5);
             //define a localizacao do numero paralalelamente ao Panel Tabuleiro de referencia, e calcula para manter um alinhamento
+
+            vetorLabel.add(posicaoTxt);
         }
         for (int i = 0; i < 5; i++) {
             JLabel posicaoTxt = new JLabel();
@@ -82,7 +89,9 @@ public class janela extends javax.swing.JFrame {
             this.jPanelFundo.add(posicaoTxt);
 
             posicaoTxt.setLocation(referencia.getX() + referencia.getSize().width + 5, referencia.getY() + i * 50);
+            vetorLabel.add(posicaoTxt);
         }
+        return vetorLabel;
     }
 
     private JPanel[][] criaPanelsPecas(JPanel tabuleiro) {
@@ -96,12 +105,6 @@ public class janela extends javax.swing.JFrame {
                 pecas[x][y].setSize(50, 50);
                 pecas[x][y].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-                /*JLabel coord = new JLabel();
-                coord.setText((x + 1) + "");
-                pecas[x][y].add(coord);
-                pecas[x][y].setLayout(null);
-                coord.setSize(16, 16);
-                coord.setLocation(1, 0);*/
                 tabuleiro.add(pecas[x][y]);
                 pecas[x][y].setLocation((x * 51), (y * 51));
             }
@@ -141,6 +144,25 @@ public class janela extends javax.swing.JFrame {
         });
     }
 
+    private void jIniciaPartida() {
+        this.setVisibleJogada(true);
+        //define os panels do tabuleiro inimigo para poderem serem setados
+        for (JPanel[] vet : this.JPecasIA) {
+            for (JPanel panel : vet) {
+                this.setPanelClicavel(panel);
+            }
+        }
+    }
+
+    private void setVisibleJogada(boolean op) {
+        this.jLabelPlacarIA.setVisible(op);
+        this.jLabelPlacarPlayer.setVisible(op);
+        this.jLabelIA.setVisible(op);
+        this.jLabelP.setVisible(op);
+        this.jTabuleiroIA.setVisible(op);
+        this.setLabelsVisible(jLabelsCoordIA, op);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -168,8 +190,8 @@ public class janela extends javax.swing.JFrame {
         jRadioCruazdorPosH = new javax.swing.JRadioButton();
         jRadioCruazdorPosV = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelP = new javax.swing.JLabel();
+        jLabelIA = new javax.swing.JLabel();
         jLabelPlacarIA = new javax.swing.JLabel();
         jLabelPlacarPlayer = new javax.swing.JLabel();
 
@@ -363,13 +385,13 @@ public class janela extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(230, 230, 230));
-        jLabel5.setText("Acertos Player:");
+        jLabelP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelP.setForeground(new java.awt.Color(230, 230, 230));
+        jLabelP.setText("Acertos Player:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(230, 230, 230));
-        jLabel6.setText("Acertos IA:");
+        jLabelIA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelIA.setForeground(new java.awt.Color(230, 230, 230));
+        jLabelIA.setText("Acertos IA:");
 
         jLabelPlacarIA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabelPlacarIA.setForeground(new java.awt.Color(230, 230, 230));
@@ -397,8 +419,8 @@ public class janela extends javax.swing.JFrame {
                         .addComponent(jTabuleiroIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelPlacarIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -417,11 +439,11 @@ public class janela extends javax.swing.JFrame {
                     .addComponent(jTabuleiroIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
+                            .addComponent(jLabelP)
                             .addComponent(jLabelPlacarPlayer))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
+                            .addComponent(jLabelIA)
                             .addComponent(jLabelPlacarIA))))
                 .addContainerGap())
         );
@@ -466,15 +488,10 @@ public class janela extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.jButton2.setEnabled(false);
-        this.jInicaPartida();
+        //this.jButton2.setEnabled(false);
+        this.jIniciaPartida();
 
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jInicaPartida() {
-        this.jTabuleiroIA.setVisible(true);
-        this.escrevaCoord(this.jTabuleiroIA);
-    }
 
     /**
      * @param args the command line arguments
@@ -493,20 +510,21 @@ public class janela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Janela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new janela().setVisible(true);
+                new Janela().setVisible(true);
             }
         });
     }
@@ -517,8 +535,8 @@ public class janela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelIA;
+    private javax.swing.JLabel jLabelP;
     private javax.swing.JLabel jLabelPlacarIA;
     private javax.swing.JLabel jLabelPlacarPlayer;
     private javax.swing.JPanel jPanelFundo;

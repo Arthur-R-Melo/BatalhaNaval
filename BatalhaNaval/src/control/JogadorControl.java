@@ -5,7 +5,7 @@
 package control;
 
 import model.Tabuleiro;
-import view.janela;
+import view.Janela;
 
 /**
  *
@@ -13,9 +13,9 @@ import view.janela;
  */
 public class JogadorControl {
     
-    private janela origem;
+    private Janela origem;
 
-    public JogadorControl(janela origem) {
+    public JogadorControl(Janela origem) {
         this.origem = origem;
     }
     
