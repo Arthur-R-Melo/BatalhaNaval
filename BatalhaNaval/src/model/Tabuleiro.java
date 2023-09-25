@@ -22,7 +22,26 @@ public class Tabuleiro {
             }
         }
     }
+    /*
+        A String posicao deve ser formatada como letra(a, b, c, d, e)+ numero (from 1 to 10) como em: a1, b5, e10.
+     */
+    public void posicionaNavio(Navio navio, int parOrdenado[], int direcao) {
+        //TODO
+    }
+    
+    /*
+        Retorna verdadeiro caso atinja um navio, falso caso erre e nulo caso ocorra um erro
+     */
+    public boolean recebeTiro(int parOrdenado[]) {//true = acertou navio | false = não acertou um navio
 
+        if (this.getCoord(parOrdenado) == Tabuleiro.NAVIO) {
+            this.tab[parOrdenado[0]][parOrdenado[1]] = NAVIO_ACERTADO;
+            return true;
+        } else {
+            this.tab[parOrdenado[0]][parOrdenado[1]] = TIRO_AGUA;
+            return false;
+        }
+    }
     
     
     public int[][] getTab() {
@@ -31,10 +50,6 @@ public class Tabuleiro {
     
     public int getCoord(int parOrdenado[]) {
         return this.tab[parOrdenado[0]][parOrdenado[1]];
-    }
-    
-    public void setCoord(int value, int parOrdenado[]) {
-        this.tab[parOrdenado[0]][parOrdenado[1]] = value;
     }
 
 }

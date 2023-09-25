@@ -5,15 +5,22 @@
 package control;
 
 import model.Tabuleiro;
+import view.janela;
 
 /**
  *
  * @author 0068943
  */
 public class JogadorControl {
-    public boolean realizaAtaque() {
-        //TODO
-        return true;
+    
+    private janela origem;
+
+    public JogadorControl(janela origem) {
+        this.origem = origem;
+    }
+    
+    public int[] getAtk() {
+        return null;
     }
     
     public boolean posicionaNavio() {

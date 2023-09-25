@@ -4,6 +4,7 @@
  */
 package model.jogador;
 
+import control.JogadorControl;
 import model.Tabuleiro;
 
 /**
@@ -17,5 +18,9 @@ public class Jogador {
     public Jogador() {
         this.parteDestruidas = 0;
         this.tabuleiro = new Tabuleiro();
+    }
+    
+    public int[] realizaAtaque(JogadorControl controle) {
+        return controle.getAtk();
     }
 }
