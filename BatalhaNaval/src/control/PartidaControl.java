@@ -5,7 +5,7 @@
 package control;
 
 import model.Partida;
-import view.janela;
+import view.Janela;
 
 /**
  *
@@ -13,9 +13,9 @@ import view.janela;
  */
 public class PartidaControl {
     private Partida partida;
-    private janela origem;
+    private Janela origem;
 
-    public PartidaControl(Partida partida, janela origem) {
+    public PartidaControl(Partida partida, Janela origem) {
         this.partida = partida;
         this.origem = origem;
     }

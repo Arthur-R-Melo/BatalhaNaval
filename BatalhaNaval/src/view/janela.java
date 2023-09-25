@@ -3,8 +3,10 @@ package view;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -17,6 +19,10 @@ public class Janela extends javax.swing.JFrame {
     private ArrayList<JLabel> jLabelsCoordPlayer;
     private ArrayList<JLabel> jLabelsCoordIA;
 
+    private ButtonGroup jGroupPort;
+    private ButtonGroup jGroupFrag;
+    private ButtonGroup jGroupCruz;
+
     private int[] coordAtk;
 
     public Janela() {
@@ -27,14 +33,27 @@ public class Janela extends javax.swing.JFrame {
     private void config() {
         this.setLocationRelativeTo(null);
 
+        //criando e atribuindo os Button Groups
+        this.createButtonGroup(this.jGroupPort, this.jRadioPortAviaoPosH, this.jRadioPortAviaoPosV);
+        this.createButtonGroup(this.jGroupFrag, this.jRadioFragataPosH, this.jRadioFragataPosV);
+        this.createButtonGroup(this.jGroupCruz, this.jRadioCruzadorPosH, this.jRadioCruzadorPosV);
+
+        //cria os panels do tabuleiro
         this.jPecasPlayer = this.criaPanelsPecas(this.jTabuleiroPlayer);
         this.JPecasIA = this.criaPanelsPecas(this.jTabuleiroIA);
 
-        //Setar todas as posicoes como clicaveis
+        //cria os JLabels das cordenadas
         this.jLabelsCoordPlayer = this.escrevaCoord(this.jTabuleiroPlayer);
         this.jLabelsCoordIA = this.escrevaCoord(this.jTabuleiroIA);
 
         this.setVisibleJogada(false);
+    }
+
+    private void createButtonGroup(ButtonGroup grupo, JRadioButton bot1, JRadioButton bot2) {
+        grupo = new ButtonGroup();
+        grupo.add(bot1);
+        grupo.add(bot2);
+
     }
 
     private void setLabelsVisible(ArrayList<JLabel> vet, boolean op) {
@@ -49,20 +68,21 @@ public class Janela extends javax.swing.JFrame {
         int tamChar = 20;
         char letra;
         for (int i = 1; i <= 10; i++) {
-            //numeros
+            //numeros - horizontal
             JLabel posicaoTxt = new JLabel();
             posicaoTxt.setText(i + "");
             posicaoTxt.setSize(tamChar, tamChar);
             posicaoTxt.setForeground(new java.awt.Color(230, 230, 230));
             this.jPanelFundo.add(posicaoTxt);
 
-            posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + 10,
+            posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + 5,
                     referencia.getY() - tamChar - 5);
             //define a localizacao do numero paralalelamente ao Panel Tabuleiro de referencia, e calcula para manter um alinhamento
 
             vetorLabel.add(posicaoTxt);
         }
         for (int i = 0; i < 5; i++) {
+            //letras - vertical
             JLabel posicaoTxt = new JLabel();
 
             switch (i) {
@@ -89,6 +109,7 @@ public class Janela extends javax.swing.JFrame {
             this.jPanelFundo.add(posicaoTxt);
 
             posicaoTxt.setLocation(referencia.getX() + referencia.getSize().width + 5, referencia.getY() + i * 50);
+            //define a localizacao do numero paralalelamente ao Panel Tabuleiro de referencia, e calcula para manter um alinhamento
             vetorLabel.add(posicaoTxt);
         }
         return vetorLabel;
@@ -163,6 +184,21 @@ public class Janela extends javax.swing.JFrame {
         this.setLabelsVisible(jLabelsCoordIA, op);
     }
 
+    private void setEnabledPosiconamento(boolean op) {
+        this.jButtonIniciar.setEnabled(op);
+        
+        this.jRadioCruzadorPosH.setEnabled(op);
+        this.jRadioCruzadorPosV.setEnabled(op);
+        this.jRadioPortAviaoPosH.setEnabled(op);
+        this.jRadioPortAviaoPosV.setEnabled(op);
+        this.jRadioFragataPosH.setEnabled(op);
+        this.jRadioFragataPosV.setEnabled(op);
+        
+        this.jTextPortAviaoCoord.setEnabled(op);
+        this.jTextFragataCoord.setEnabled(op);
+        this.jTextCruzadorCoord.setEnabled(op);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -187,9 +223,9 @@ public class Janela extends javax.swing.JFrame {
         jRadioFragataPosV = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jTextCruzadorCoord = new javax.swing.JTextField();
-        jRadioCruazdorPosH = new javax.swing.JRadioButton();
-        jRadioCruazdorPosV = new javax.swing.JRadioButton();
-        jButton2 = new javax.swing.JButton();
+        jRadioCruzadorPosH = new javax.swing.JRadioButton();
+        jRadioCruzadorPosV = new javax.swing.JRadioButton();
+        jButtonIniciar = new javax.swing.JButton();
         jLabelP = new javax.swing.JLabel();
         jLabelIA = new javax.swing.JLabel();
         jLabelPlacarIA = new javax.swing.JLabel();
@@ -199,7 +235,7 @@ public class Janela extends javax.swing.JFrame {
 
         jPanelFundo.setBackground(new java.awt.Color(75, 75, 75));
 
-        jTabuleiroPlayer.setBackground(new java.awt.Color(0, 0, 204));
+        jTabuleiroPlayer.setBackground(new java.awt.Color(0, 153, 255));
         jTabuleiroPlayer.setPreferredSize(new java.awt.Dimension(510, 255));
 
         javax.swing.GroupLayout jTabuleiroPlayerLayout = new javax.swing.GroupLayout(jTabuleiroPlayer);
@@ -213,7 +249,7 @@ public class Janela extends javax.swing.JFrame {
             .addGap(0, 255, Short.MAX_VALUE)
         );
 
-        jTabuleiroIA.setBackground(new java.awt.Color(0, 0, 204));
+        jTabuleiroIA.setBackground(new java.awt.Color(0, 153, 255));
         jTabuleiroIA.setPreferredSize(new java.awt.Dimension(510, 255));
 
         javax.swing.GroupLayout jTabuleiroIALayout = new javax.swing.GroupLayout(jTabuleiroIA);
@@ -240,19 +276,24 @@ public class Janela extends javax.swing.JFrame {
         jLabel2.setText("Porta-aviões (4x):");
 
         jTextPortAviaoCoord.setBackground(new java.awt.Color(75, 75, 75));
+        jTextPortAviaoCoord.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextPortAviaoCoord.setForeground(new java.awt.Color(230, 230, 230));
-        jTextPortAviaoCoord.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jRadioPortAviaoPosH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioPortAviaoPosH.setForeground(new java.awt.Color(230, 230, 230));
+        jRadioPortAviaoPosH.setSelected(true);
         jRadioPortAviaoPosH.setText("H");
+        jRadioPortAviaoPosH.setContentAreaFilled(false);
         jRadioPortAviaoPosH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioPortAviaoPosHActionPerformed(evt);
             }
         });
 
+        jRadioPortAviaoPosV.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioPortAviaoPosV.setForeground(new java.awt.Color(230, 230, 230));
         jRadioPortAviaoPosV.setText("V");
+        jRadioPortAviaoPosV.setContentAreaFilled(false);
         jRadioPortAviaoPosV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioPortAviaoPosVActionPerformed(evt);
@@ -264,19 +305,24 @@ public class Janela extends javax.swing.JFrame {
         jLabel3.setText("Cruzador (2x):");
 
         jTextFragataCoord.setBackground(new java.awt.Color(75, 75, 75));
+        jTextFragataCoord.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextFragataCoord.setForeground(new java.awt.Color(230, 230, 230));
-        jTextFragataCoord.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jRadioFragataPosH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioFragataPosH.setForeground(new java.awt.Color(230, 230, 230));
+        jRadioFragataPosH.setSelected(true);
         jRadioFragataPosH.setText("H");
+        jRadioFragataPosH.setContentAreaFilled(false);
         jRadioFragataPosH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioFragataPosHActionPerformed(evt);
             }
         });
 
+        jRadioFragataPosV.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioFragataPosV.setForeground(new java.awt.Color(230, 230, 230));
         jRadioFragataPosV.setText("V");
+        jRadioFragataPosV.setContentAreaFilled(false);
         jRadioFragataPosV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioFragataPosVActionPerformed(evt);
@@ -288,30 +334,35 @@ public class Janela extends javax.swing.JFrame {
         jLabel4.setText("Fragata (3x):");
 
         jTextCruzadorCoord.setBackground(new java.awt.Color(75, 75, 75));
+        jTextCruzadorCoord.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextCruzadorCoord.setForeground(new java.awt.Color(230, 230, 230));
-        jTextCruzadorCoord.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jRadioCruazdorPosH.setForeground(new java.awt.Color(230, 230, 230));
-        jRadioCruazdorPosH.setText("H");
-        jRadioCruazdorPosH.addActionListener(new java.awt.event.ActionListener() {
+        jRadioCruzadorPosH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioCruzadorPosH.setForeground(new java.awt.Color(230, 230, 230));
+        jRadioCruzadorPosH.setSelected(true);
+        jRadioCruzadorPosH.setText("H");
+        jRadioCruzadorPosH.setContentAreaFilled(false);
+        jRadioCruzadorPosH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioCruazdorPosHActionPerformed(evt);
+                jRadioCruzadorPosHActionPerformed(evt);
             }
         });
 
-        jRadioCruazdorPosV.setForeground(new java.awt.Color(230, 230, 230));
-        jRadioCruazdorPosV.setText("V");
-        jRadioCruazdorPosV.addActionListener(new java.awt.event.ActionListener() {
+        jRadioCruzadorPosV.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioCruzadorPosV.setForeground(new java.awt.Color(230, 230, 230));
+        jRadioCruzadorPosV.setText("V");
+        jRadioCruzadorPosV.setContentAreaFilled(false);
+        jRadioCruzadorPosV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioCruazdorPosVActionPerformed(evt);
+                jRadioCruzadorPosVActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("Iniciar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonIniciar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonIniciar.setText("Iniciar");
+        jButtonIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonIniciarActionPerformed(evt);
             }
         });
 
@@ -347,14 +398,14 @@ public class Janela extends javax.swing.JFrame {
                                     .addGroup(jPanelPosInicialLayout.createSequentialGroup()
                                         .addComponent(jTextCruzadorCoord, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioCruazdorPosH)
+                                        .addComponent(jRadioCruzadorPosH)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jRadioCruazdorPosV)))
+                                        .addComponent(jRadioCruzadorPosV)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanelPosInicialLayout.createSequentialGroup()
                 .addGap(81, 81, 81)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelPosInicialLayout.setVerticalGroup(
@@ -378,10 +429,10 @@ public class Janela extends javax.swing.JFrame {
                 .addGroup(jPanelPosInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextCruzadorCoord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioCruazdorPosH)
-                    .addComponent(jRadioCruazdorPosV))
+                    .addComponent(jRadioCruzadorPosH)
+                    .addComponent(jRadioCruzadorPosV))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -414,7 +465,7 @@ public class Janela extends javax.swing.JFrame {
                         .addComponent(jTabuleiroPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
                         .addComponent(jPanelPosInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(19, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                         .addComponent(jTabuleiroIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
@@ -478,20 +529,20 @@ public class Janela extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioFragataPosVActionPerformed
 
-    private void jRadioCruazdorPosHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCruazdorPosHActionPerformed
+    private void jRadioCruzadorPosHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCruzadorPosHActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioCruazdorPosHActionPerformed
+    }//GEN-LAST:event_jRadioCruzadorPosHActionPerformed
 
-    private void jRadioCruazdorPosVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCruazdorPosVActionPerformed
+    private void jRadioCruzadorPosVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCruzadorPosVActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioCruazdorPosVActionPerformed
+    }//GEN-LAST:event_jRadioCruzadorPosVActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        //this.jButton2.setEnabled(false);
+    private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
+
+        this.setEnabledPosiconamento(false);
         this.jIniciaPartida();
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonIniciarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,7 +555,7 @@ public class Janela extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -530,7 +581,7 @@ public class Janela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonIniciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -541,8 +592,8 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPlacarPlayer;
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelPosInicial;
-    private javax.swing.JRadioButton jRadioCruazdorPosH;
-    private javax.swing.JRadioButton jRadioCruazdorPosV;
+    private javax.swing.JRadioButton jRadioCruzadorPosH;
+    private javax.swing.JRadioButton jRadioCruzadorPosV;
     private javax.swing.JRadioButton jRadioFragataPosH;
     private javax.swing.JRadioButton jRadioFragataPosV;
     private javax.swing.JRadioButton jRadioPortAviaoPosH;
