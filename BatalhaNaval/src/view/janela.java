@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -147,6 +148,7 @@ public class Janela extends javax.swing.JFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                panel.setBackground(Color.red);
             }
 
             @Override
