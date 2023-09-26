@@ -1,5 +1,6 @@
 package view;
 
+import control.PartidaControl;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -8,12 +9,16 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import model.Navio;
+import model.Partida;
 
 /**
  *
  * @author Valtin
  */
 public class Janela extends javax.swing.JFrame {
+    
+    private Partida partida;
 
     private JPanel[][] jPecasPlayer;
     private JPanel[][] JPecasIA;
@@ -23,8 +28,11 @@ public class Janela extends javax.swing.JFrame {
     private ButtonGroup jGroupPort;
     private ButtonGroup jGroupFrag;
     private ButtonGroup jGroupCruz;
-
+    
     private int[] coordAtk;
+    
+    private String tempCoordNavio;
+    private boolean tempPosNavioH;
 
     public Janela() {
         initComponents();
@@ -48,6 +56,18 @@ public class Janela extends javax.swing.JFrame {
         this.jLabelsCoordIA = this.escrevaCoord(this.jTabuleiroIA);
 
         this.setVisibleJogada(false);
+    }
+    
+    public String getTempCoordNavio() {
+        return tempCoordNavio;
+    }
+
+    public boolean isTempPosNavio() {
+        return tempPosNavioH;
+    }
+
+    public int[] getCoordAtk() {
+        return coordAtk;
     }
 
     private void createButtonGroup(ButtonGroup grupo, JRadioButton bot1, JRadioButton bot2) {
@@ -129,15 +149,12 @@ public class Janela extends javax.swing.JFrame {
 
                 tabuleiro.add(pecas[x][y]);
                 pecas[x][y].setLocation((x * 51), (y * 51));
+                pecas[x][y].setName(x+","+y);
             }
 
         }
         return pecas;
 
-    }
-
-    public int[] getCoordAtk() {
-        return coordAtk;
     }
 
     private void setPanelClicavel(JPanel panel) {
@@ -149,6 +166,9 @@ public class Janela extends javax.swing.JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 panel.setBackground(Color.red);
+                if(e.getButton() == MouseEvent.BUTTON3) {
+                    panel.setBackground(Color.blue);
+                }
             }
 
             @Override
@@ -540,10 +560,28 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioCruzadorPosVActionPerformed
 
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
+        /*this.partida = new Partida();
+        PartidaControl pc = new PartidaControl(partida, this);
+        boolean comecou; //para verificar se não ocorreu erro
+        
+        //TO COMENT
+        
+        this.tempCoordNavio = this.jTextFragataCoord.getText();
+        this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
+        pc.posicionaNavio(Navio.FRAGATA);
+        
+        this.tempCoordNavio = this.jTextPortAviaoCoord.getText();
+        this.tempPosNavioH = this.jRadioPortAviaoPosH.isSelected();
+         pc.posicionaNavio(Navio.PORTA_AVIOES);
+        
+        this.tempCoordNavio = this.jTextCruzadorCoord.getText();
+        this.tempPosNavioH = this.jRadioCruzadorPosH.isSelected();
+        pc.posicionaNavio(Navio.CRUZADOR);*/
+        
 
         this.setEnabledPosiconamento(false);
         this.jIniciaPartida();
-
+        
     }//GEN-LAST:event_jButtonIniciarActionPerformed
 
     /**
