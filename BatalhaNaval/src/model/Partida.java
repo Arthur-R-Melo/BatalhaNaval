@@ -37,8 +37,9 @@ public class Partida {
         }
     }
     
-    public void posicionaNavios() {
-        
+    public boolean posicionaNavios() {
+        for (int i = this.jogadores.length; i >= 0; i--) {
+        }
     }
     
     public boolean validaVitoria(Jogador jog) {

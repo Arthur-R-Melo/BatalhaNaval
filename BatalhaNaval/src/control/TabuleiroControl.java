@@ -24,7 +24,7 @@ public class TabuleiroControl {
     }
     public static int[] convertePosicao(String posicao) throws NumberFormatException {
         int vet[] = new int[2];
-        char y = posicao.charAt(0);
+        char y = posicao.toLowerCase().charAt(0);
         vet[1] = (int) y - (int) 'a';
         /*
                 Para converter do caractere para uma posição de 0 a 4 é feito o parse do primeiro caractere da String e subtraido o valor do parse
