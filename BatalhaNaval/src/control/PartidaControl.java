@@ -4,7 +4,9 @@
  */
 package control;
 
+import model.Navio;
 import model.Partida;
+import model.Tabuleiro;
 import view.Janela;
 
 /**
@@ -18,6 +20,13 @@ public class PartidaControl {
     public PartidaControl(Partida partida, Janela origem) {
         this.partida = partida;
         this.origem = origem;
+    }
+    
+    public void posicionaNavio(Navio navio, int parOrdenado[], int direcao) {
+        TabuleiroControl controleTabuleiro = new TabuleiroControl(new Tabuleiro());
+        if(controleTabuleiro.validaPosicionamento(navio, parOrdenado, direcao)) {
+            
+        }
     }
     
     public void realizaJogada() {

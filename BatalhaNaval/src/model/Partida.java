@@ -37,6 +37,10 @@ public class Partida {
         }
     }
     
+    public void posicionaNavios() {
+        
+    }
+    
     public boolean validaVitoria(Jogador jog) {
         return jog.getParteDestruidas() == TOTAL_DE_PARTES;
     }
