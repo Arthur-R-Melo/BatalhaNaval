@@ -23,4 +23,16 @@ public class Jogador {
     public int[] realizaAtaque(JogadorControl controle) {
         return controle.getAtk();
     }
+    
+    public void destroiParte() {
+        this.parteDestruidas++;
+    }
+
+    public int getParteDestruidas() {
+        return parteDestruidas;
+    }
+
+    public Tabuleiro getTabuleiro() {
+        return tabuleiro;
+    }
 }

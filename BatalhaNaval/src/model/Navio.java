@@ -16,6 +16,10 @@ public enum Navio {
     private Navio(int tam) {
         this.tam = tam;
     }
+
+    public int getTam() {
+        return tam;
+    }
     
     
     

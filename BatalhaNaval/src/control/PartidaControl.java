@@ -20,9 +20,7 @@ public class PartidaControl {
         this.origem = origem;
     }
     
-    //posicao [0] = jogador | [1] = máquina
-    public int[][][] realizaJogada() {
-        //TODO
-        return null;
+    public void realizaJogada() {
+        this.partida.realizaRodada(new JogadorControl(origem));
     }
 }
