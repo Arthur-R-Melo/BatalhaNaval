@@ -22,14 +22,11 @@ public class PartidaControl {
         this.origem = origem;
     }
     
-    public void posicionaNavio(Navio navio, int parOrdenado[], int direcao) {
-        TabuleiroControl controleTabuleiro = new TabuleiroControl(new Tabuleiro());
-        if(controleTabuleiro.validaPosicionamento(navio, parOrdenado, direcao)) {
-            
-        }
+    public boolean posicionaNavio(Navio navio, Janela origem) {
+        return false;
     }
     
-    public void realizaJogada() {
+    public boolean realizaJogada() {
         this.partida.realizaRodada(new JogadorControl(origem));
     }
 }
