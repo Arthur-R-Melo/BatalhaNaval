@@ -20,7 +20,7 @@ public class JogadorControl {
     }
     
     public int[] getAtk() {
-        return null;
+        return this.origem.getCoordAtk();
     }
     
     public boolean posicionaNavio() {
