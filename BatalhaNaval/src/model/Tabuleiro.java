@@ -24,8 +24,16 @@ public class Tabuleiro {
     /*
         A String posicao deve ser formatada como letra(a, b, c, d, e)+ numero (from 1 to 10) como em: a1, b5, e10.
      */
-    public void posicionaNavio(Navio navio, int parOrdenado[], boolean direcao) {
-        //TODO
+    public void posicionaNavio(Navio navio, int parOrdenado[], boolean direcaoH) {
+        if(direcaoH) {
+            for (int i = parOrdenado[1]; i < navio.getTam() + parOrdenado[1]; i++) {
+                this.tab[i][parOrdenado[0]] = NAVIO;
+            }
+        }else {
+            for (int i = parOrdenado[0]; i < navio.getTam() + parOrdenado[0]; i++) {
+                this.tab[parOrdenado[1]][i] = NAVIO;
+            }
+        }
     }
     
     /*
