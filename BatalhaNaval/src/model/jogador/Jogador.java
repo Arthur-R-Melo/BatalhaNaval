@@ -20,6 +20,14 @@ public class Jogador {
         this.tabuleiro = new Tabuleiro();
     }
     
+    public boolean getDirecaoNavio(JogadorControl controle) {
+        return controle.getDirecaoNavio();
+    }
+    
+    public int[] getParNavio(JogadorControl controle) {
+        return controle.getParInicial();
+    }
+    
     public int[] realizaAtaque(JogadorControl controle) {
         return controle.getAtk();
     }

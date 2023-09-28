@@ -62,6 +62,10 @@ public class Janela extends javax.swing.JFrame {
         return tempCoordNavio;
     }
 
+    public Partida getPartida() {
+        return partida;
+    }
+
     public boolean isTempPosNavio() {
         return tempPosNavioH;
     }

@@ -18,7 +18,7 @@ public class TabuleiroControl {
     public TabuleiroControl(Tabuleiro tabuleiro) {
         this.tabuleiro = tabuleiro;
     }
-    public boolean validaPosicionamento(Navio navio, int parOrdenado[], int direcao) {
+    public boolean validaPosicionamento(Navio navio, int parOrdenado[], boolean direcao) {
         //TODO
         return true;
     }

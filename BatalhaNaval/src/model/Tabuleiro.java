@@ -11,7 +11,6 @@ package model;
 public class Tabuleiro {
 
     public static final int EM_BRANCO = 1, NAVIO = 2, TIRO_AGUA = 3, NAVIO_ACERTADO = 4;
-    public static final int HORIZONTAL = 1, VERTICAL = 2;
     private int tab[][];
 
     public Tabuleiro() {
@@ -25,7 +24,7 @@ public class Tabuleiro {
     /*
         A String posicao deve ser formatada como letra(a, b, c, d, e)+ numero (from 1 to 10) como em: a1, b5, e10.
      */
-    public void posicionaNavio(Navio navio, int parOrdenado[], int direcao) {
+    public void posicionaNavio(Navio navio, int parOrdenado[], boolean direcao) {
         //TODO
     }
     

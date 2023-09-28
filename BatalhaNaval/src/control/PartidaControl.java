@@ -6,7 +6,7 @@ package control;
 
 import model.Navio;
 import model.Partida;
-import model.Tabuleiro;
+import model.jogador.Jogador;
 import view.Janela;
 
 /**
@@ -14,19 +14,35 @@ import view.Janela;
  * @author 0068943
  */
 public class PartidaControl {
-    private Partida partida;
     private Janela origem;
 
-    public PartidaControl(Partida partida, Janela origem) {
-        this.partida = partida;
+    public PartidaControl(Janela origem) {
         this.origem = origem;
     }
     
-    public boolean posicionaNavio(Navio navio, Janela origem) {
-        return false;
+    public boolean posicionaNavio(Navio navio) {
+        Partida partida = this.origem.getPartida();
+        int[] parOrdenado;
+        boolean direcao;//verdadeiro para horizontal e falso para vertical
+        TabuleiroControl tabCtrl;
+        JogadorControl jogCtrl = new JogadorControl(origem);
+        for (Jogador jog : partida.getJogadores()) {
+            tabCtrl = new TabuleiroControl(jog.getTabuleiro());
+            parOrdenado = jog.getParNavio(jogCtrl);
+            direcao = jog.getDirecaoNavio(jogCtrl);
+            if(!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao)) {
+                return false;
+            }else {
+                jog.getTabuleiro().posicionaNavio(navio, parOrdenado, direcao);
+            }
+        }
+        return true;
     }
     
     public boolean realizaJogada() {
-        this.partida.realizaRodada(new JogadorControl(origem));
+        //TODO
+        Partida partida = this.origem.getPartida();
+        partida.realizaRodada(new JogadorControl(origem));
+        return true;
     }
 }

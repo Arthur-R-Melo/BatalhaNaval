@@ -13,7 +13,7 @@ import model.jogador.Computador;
  * @author 0068943
  */
 public class Partida {
-    private Jogador jogadores[];
+    private final Jogador jogadores[];
     private final int TOTAL_DE_PARTES = Navio.CRUZADOR.getTam() + Navio.FRAGATA.getTam() + Navio.PORTA_AVIOES.getTam();
 
     public Partida() {
@@ -36,10 +36,9 @@ public class Partida {
             }
         }
     }
-    
-    public boolean posicionaNavios() {
-        for (int i = this.jogadores.length; i >= 0; i--) {
-        }
+
+    public Jogador[] getJogadores() {
+        return jogadores;
     }
     
     public boolean validaVitoria(Jogador jog) {

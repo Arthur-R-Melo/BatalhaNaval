@@ -23,20 +23,16 @@ public class JogadorControl {
         return this.origem.getCoordAtk();
     }
     
-    public boolean posicionaNavio() {
-        //TODO
-        return true;
-    }
-    
     public int[] getParInicial() {
         //TODO 
         //Deve chamar um método da janela para ter acesso ao par ordenado do posicionamento inicial, entretando o método não foi implementado
+        //Tem que converter de String para vetor de inteiros
         return null;
     }
     
-    public int getDirecao() {
+    public boolean getDirecaoNavio() {
         //TODO 
-        //Deve chamar um método da janela para ter acesso a direção do posicionamento inicial, entretando o método não foi implementado
-        return 0;
+        //Deve chamar um método da janela para ter acesso a  direção do navio, entretando o método não foi implementado
+        return false;
     }
 }
