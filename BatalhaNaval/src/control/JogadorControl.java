@@ -24,15 +24,10 @@ public class JogadorControl {
     }
     
     public int[] getParInicial() {
-        //TODO 
-        //Deve chamar um método da janela para ter acesso ao par ordenado do posicionamento inicial, entretando o método não foi implementado
-        //Tem que converter de String para vetor de inteiros
-        return null;
+        return TabuleiroControl.convertePosicao(this.origem.getTempCoordNavio());
     }
     
     public boolean getDirecaoNavio() {
-        //TODO 
-        //Deve chamar um método da janela para ter acesso a  direção do navio, entretando o método não foi implementado
-        return false;
+        return origem.isTempPosNavio();
     }
 }
