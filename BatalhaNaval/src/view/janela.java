@@ -193,7 +193,7 @@ public class Janela extends javax.swing.JFrame {
 
     private void jIniciaPartida() {
         this.setVisibleJogada(true);
-        //define os panels do tabuleiro inimigo para poderem serem setados
+        // define os panels do tabuleiro inimigo para poderem serem setados
         for (JPanel[] vet : this.JPecasIA) {
             for (JPanel panel : vet) {
                 this.setPanelClicavel(panel);
@@ -255,6 +255,8 @@ public class Janela extends javax.swing.JFrame {
         jLabelPlacarPlayer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Batalha Naval");
+        setResizable(false);
 
         jPanelFundo.setBackground(new java.awt.Color(75, 75, 75));
 
@@ -312,6 +314,11 @@ public class Janela extends javax.swing.JFrame {
         jRadioPortAviaoPosV.setForeground(new java.awt.Color(230, 230, 230));
         jRadioPortAviaoPosV.setText("V");
         jRadioPortAviaoPosV.setContentAreaFilled(false);
+        jRadioPortAviaoPosV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioPortAviaoPosVActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(230, 230, 230));
@@ -527,24 +534,30 @@ public class Janela extends javax.swing.JFrame {
 
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
         //TODO
-
+        
         /*this.partida = new Partida();
-        PartidaControl pc = new PartidaControl(partida, this);
+        PartidaControl pc = new PartidaControl(this);
         boolean comecou; //para verificar se não ocorreu erro
-        
-        //TO COMENT
-        
-        this.tempCoordNavio = this.jTextFragataCoord.getText();
-        this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
-        pc.posicionaNavio(Navio.FRAGATA);
-        
+
+        //verifica se porta aviões está ok
         this.tempCoordNavio = this.jTextPortAviaoCoord.getText();
         this.tempPosNavioH = this.jRadioPortAviaoPosH.isSelected();
-         pc.posicionaNavio(Navio.PORTA_AVIOES);
-        
-        this.tempCoordNavio = this.jTextCruzadorCoord.getText();
-        this.tempPosNavioH = this.jRadioCruzadorPosH.isSelected();
-        pc.posicionaNavio(Navio.CRUZADOR);*/
+        comecou = pc.posicionaNavio(Navio.PORTA_AVIOES);
+
+        if (comecou) {
+            //verifica se fragata está ok
+            this.tempCoordNavio = this.jTextFragataCoord.getText();
+            this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
+            comecou = pc.posicionaNavio(Navio.FRAGATA);
+
+            if (comecou) {
+                //verifica se cruzador está ok
+                this.tempCoordNavio = this.jTextCruzadorCoord.getText();
+                this.tempPosNavioH = this.jRadioCruzadorPosH.isSelected();
+                comecou = pc.posicionaNavio(Navio.CRUZADOR);
+            }
+        }*/
+
         this.setEnabledPosiconamento(false);
         this.jIniciaPartida();
 
