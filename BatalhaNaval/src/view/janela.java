@@ -522,7 +522,7 @@ public class Janela extends javax.swing.JFrame {
         boolean comecou; //para verificar se não ocorreu erro
 
         //verifica se porta aviões está ok
-        this.tempCoordNavio = this.jTextPortAviaoCoord.getText() != null ? this.jTextPortAviaoCoord.getText() : "";
+        this.tempCoordNavio = this.jTextPortAviaoCoord.getText();
         this.tempPosNavioH = this.jRadioPortAviaoPosH.isSelected();
         comecou = pc.posicionaNavio(Navio.PORTA_AVIOES);
 
@@ -533,7 +533,7 @@ public class Janela extends javax.swing.JFrame {
             this.jTextPortAviaoCoord.setEnabled(false);
 
             //verifica se fragata está ok
-            this.tempCoordNavio = this.jTextFragataCoord.getText() != null ? this.jTextFragataCoord.getText() : "";
+            this.tempCoordNavio = this.jTextFragataCoord.getText();
             this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
             comecou = pc.posicionaNavio(Navio.FRAGATA);
 
