@@ -39,7 +39,7 @@ public class TabuleiroControl {
         }
         return true;
     }
-    public static int[] convertePosicao(String posicao) throws NumberFormatException {
+    public static int[] convertePosicao(String posicao) throws NumberFormatException, StringIndexOutOfBoundsException{
         int vet[] = new int[2];
         char y = posicao.toLowerCase().charAt(0);
         vet[1] = (int) y - (int) 'a';
