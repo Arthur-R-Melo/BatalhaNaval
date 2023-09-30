@@ -23,7 +23,7 @@ public class JogadorControl {
         return this.origem.getCoordAtk();
     }
     
-    public int[] getParInicial() {
+    public int[] getParInicial() throws NumberFormatException{
         return TabuleiroControl.convertePosicao(this.origem.getTempCoordNavio());
     }
     

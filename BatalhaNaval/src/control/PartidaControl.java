@@ -23,22 +23,26 @@ public class PartidaControl {
     }
 
     public boolean posicionaNavio(Navio navio) {
-        Partida partida = this.origem.getPartida();
-        int[] parOrdenado;
-        boolean direcao;//verdadeiro para horizontal e falso para vertical
-        TabuleiroControl tabCtrl;
-        JogadorControl jogCtrl = new JogadorControl(origem);
-        for (Jogador jog : partida.getJogadores()) {
-            tabCtrl = new TabuleiroControl(jog.getTabuleiro());
-            parOrdenado = jog.getParNavio(jogCtrl);
-            direcao = jog.getDirecaoNavio(jogCtrl);
-            if (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao)) {
-                return false;
-            } else {
-                jog.getTabuleiro().posicionaNavio(navio, parOrdenado, direcao);
+        try {
+            Partida partida = this.origem.getPartida();
+            int[] parOrdenado;
+            boolean direcao;//verdadeiro para horizontal e falso para vertical
+            TabuleiroControl tabCtrl;
+            JogadorControl jogCtrl = new JogadorControl(origem);
+            for (Jogador jog : partida.getJogadores()) {
+                tabCtrl = new TabuleiroControl(jog.getTabuleiro());
+                parOrdenado = jog.getParNavio(jogCtrl);
+                direcao = jog.getDirecaoNavio(jogCtrl);
+                if (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao)) {
+                    return false;
+                } else {
+                    jog.getTabuleiro().posicionaNavio(navio, parOrdenado, direcao);
+                }
             }
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-        return true;
     }
 
     public boolean realizaJogada(int i) {

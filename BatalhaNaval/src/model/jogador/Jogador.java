@@ -24,7 +24,7 @@ public class Jogador {
         return controle.getDirecaoNavio();
     }
     
-    public int[] getParNavio(JogadorControl controle) {
+    public int[] getParNavio(JogadorControl controle) throws NumberFormatException{
         return controle.getParInicial();
     }
     
