@@ -79,7 +79,7 @@ public class PartidaControl {
         return !(partida.getJogVitorioso() instanceof Computador);
     }
     
-    public int partesDestruidas(int i) {
+    public int getPartesDestruidas(int i) {
         Partida partida = this.origem.getPartida();
         int temp = i == 1? 0:1;
         return partida.getJogadores()[temp].getParteDestruidas();

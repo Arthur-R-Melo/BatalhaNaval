@@ -19,37 +19,37 @@ import model.Tabuleiro;
  * @author Valtin
  */
 public class Janela extends javax.swing.JFrame {
-
+    
     public static final Color EM_BRANCO = new Color(230, 230, 230),
             NAVIO = new Color(0, 153, 0),
             TIRO_AGUA = new Color(0, 153, 155),
             NAVIO_ACERTADO = new Color(204, 0, 0);
-
+    
     private Partida partida;
     private PartidaControl partidaControl;
-
+    
     private JPanel[][] jPecasPlayer;
     private JPanel[][] JPecasIA;
     private ArrayList<JLabel> jLabelsCoordPlayer;
     private ArrayList<JLabel> jLabelsCoordIA;
-
+    
     private ButtonGroup jGroupPort;
     private ButtonGroup jGroupFrag;
     private ButtonGroup jGroupCruz;
-
+    
     private int[] coordAtk;
-
+    
     private String tempCoordNavio;
     private boolean tempPosNavioH;
-
+    
     public Janela() {
         initComponents();
         config();
     }
-
+    
     private void config() {
         this.coordAtk = new int[2];
-
+        
         this.setLocationRelativeTo(null);
 
         //criando e atribuindo os Button Groups
@@ -64,43 +64,43 @@ public class Janela extends javax.swing.JFrame {
         //cria os JLabels das cordenadas
         this.jLabelsCoordPlayer = this.escrevaCoord(this.jTabuleiroPlayer);
         this.jLabelsCoordIA = this.escrevaCoord(this.jTabuleiroIA);
-
+        
         this.setVisibleJogada(false);
     }
-
+    
     public String getTempCoordNavio() {
         return tempCoordNavio;
     }
-
+    
     public Partida getPartida() {
         return partida;
     }
-
+    
     public boolean isTempPosNavio() {
         return tempPosNavioH;
     }
-
+    
     public int[] getCoordAtk() {
         return coordAtk;
     }
-
+    
     private void createButtonGroup(ButtonGroup grupo, JRadioButton bot1, JRadioButton bot2) {
         grupo = new ButtonGroup();
         grupo.add(bot1);
         grupo.add(bot2);
     }
-
+    
     private void setLabelsVisible(ArrayList<JLabel> vet, boolean op) {
         for (JLabel temp : vet) {
             temp.setVisible(op);
         }
     }
-
+    
     private ArrayList<JLabel> escrevaCoord(JPanel referencia) {
         //escreve as coords no panel e retorna uma arrayList para poderem ser modificadas dps
 
         ArrayList vetorLabel = new ArrayList();
-
+        
         int tamChar = 20;
         char letra;
         for (int i = 1; i <= 10; i++) {
@@ -110,7 +110,7 @@ public class Janela extends javax.swing.JFrame {
             posicaoTxt.setSize(tamChar, tamChar);
             posicaoTxt.setForeground(EM_BRANCO);
             this.jPanelFundo.add(posicaoTxt);
-
+            
             posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + 5,
                     referencia.getY() - tamChar - 5);
             //define a localizacao do numero paralalelamente ao Panel Tabuleiro de referencia, e calcula para manter um alinhamento
@@ -120,7 +120,7 @@ public class Janela extends javax.swing.JFrame {
         for (int i = 0; i < 5; i++) {
             //letras - vertical
             JLabel posicaoTxt = new JLabel();
-
+            
             switch (i) {
                 case 0:
                     letra = 'A';
@@ -136,48 +136,48 @@ public class Janela extends javax.swing.JFrame {
                     break;
                 default:
                     letra = 'E';
-
+                
             }
             posicaoTxt.setText(letra + "");
-
+            
             posicaoTxt.setSize(tamChar, tamChar);
             posicaoTxt.setForeground(EM_BRANCO);
             this.jPanelFundo.add(posicaoTxt);
-
+            
             posicaoTxt.setLocation(referencia.getX() + referencia.getSize().width + 5, referencia.getY() + i * 50);
             //define a localizacao do numero paralalelamente ao Panel Tabuleiro de referencia, e calcula para manter um alinhamento
             vetorLabel.add(posicaoTxt);
         }
         return vetorLabel;
     }
-
+    
     private JPanel[][] criaPanelsPecas(JPanel tabuleiro) {
         JPanel[][] pecas = new JPanel[10][5];
         for (int x = 0; x < pecas.length; x++) {
-
+            
             for (int y = 0; y < pecas[0].length; y++) {
                 //cria todos os panels de cada tabuleiro e inicia suas configurações iniciais
                 pecas[x][y] = new JPanel();
                 pecas[x][y].setBackground(EM_BRANCO);
                 pecas[x][y].setSize(50, 50);
                 pecas[x][y].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
+                
                 tabuleiro.add(pecas[x][y]);
                 pecas[x][y].setLocation((x * 51), (y * 51));
                 pecas[x][y].setName(x + "," + y);
             }
-
+            
         }
         return pecas;
-
+        
     }
-
+    
     private void setPanelClicavel(JPanel panel) {
         panel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
             }
-
+            
             @Override
             public void mousePressed(MouseEvent e) {
                 //TODO
@@ -185,46 +185,47 @@ public class Janela extends javax.swing.JFrame {
                     coordAtk[0] = Integer.parseInt(panel.getName().split(",")[0]);
                     coordAtk[1] = Integer.parseInt(panel.getName().split(",")[1]);
                     boolean acabou = partidaControl.realizaJogada();
-
-
+                    
+                    jLabelPlacarPlayer.setText(partidaControl.getPartesDestruidas(0) + "");
+                    jLabelPlacarIA.setText(partidaControl.getPartesDestruidas(1) + "");
                     atualizaTabuleiroJogador();
-
+                    
                     if (partidaControl.getValorCoord(1, coordAtk) == Tabuleiro.NAVIO_ACERTADO) {
                         panel.setBackground(NAVIO_ACERTADO);
                     } else {
                         panel.setBackground(TIRO_AGUA);
                     }
-
+                    
                     if (acabou) {
                         String txt = partidaControl.getJogVitorioso() ? "Você ganhou!" : "Você perdeu!";
                         JOptionPane.showMessageDialog(null, txt, "Vitória!", JOptionPane.INFORMATION_MESSAGE);
                         System.exit(0); //acabou
                     }
                 }
-
+                
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
                 panel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             }
-
+            
             @Override
             public void mouseExited(MouseEvent e) {
                 panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
             }
         });
     }
-
+    
     private void atualizaTabuleiroJogador() {
         int[][] vetTab = this.partidaControl.getTabuleiro(0).getTab();
         for (int x = 0; x < vetTab.length; x++) {
             for (int y = 0; y < vetTab[0].length; y++) {
-
+                
                 switch (vetTab[x][y]) {
                     case Tabuleiro.EM_BRANCO:
                         this.jPecasPlayer[x][y].setBackground(EM_BRANCO);
@@ -238,12 +239,12 @@ public class Janela extends javax.swing.JFrame {
                     case Tabuleiro.NAVIO_ACERTADO:
                         this.jPecasPlayer[x][y].setBackground(NAVIO_ACERTADO);
                         break;
-
+                    
                 }
             }
         }
     }
-
+    
     private void jIniciaPartida() {
         this.setVisibleJogada(true);
         this.atualizaTabuleiroJogador();
@@ -255,7 +256,7 @@ public class Janela extends javax.swing.JFrame {
             }
         }
     }
-
+    
     private void setVisibleJogada(boolean op) {
         this.jLabelPlacarIA.setVisible(op);
         this.jLabelPlacarPlayer.setVisible(op);
@@ -264,7 +265,7 @@ public class Janela extends javax.swing.JFrame {
         this.jTabuleiroIA.setVisible(op);
         this.setLabelsVisible(jLabelsCoordIA, op);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -578,7 +579,7 @@ public class Janela extends javax.swing.JFrame {
         this.tempCoordNavio = this.jTextPortAviaoCoord.getText();
         this.tempPosNavioH = this.jRadioPortAviaoPosH.isSelected();
         comecou = partidaControl.posicionaNavio(Navio.PORTA_AVIOES);
-
+        
         if (comecou) {
             //desabilita os espaços do porta avioes para evitar futuros erros
             this.jRadioPortAviaoPosH.setEnabled(false);
@@ -589,7 +590,7 @@ public class Janela extends javax.swing.JFrame {
             this.tempCoordNavio = this.jTextFragataCoord.getText();
             this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
             comecou = partidaControl.posicionaNavio(Navio.FRAGATA);
-
+            
             if (comecou) {
                 //desabilita os componentes graficos da fragata
                 this.jRadioFragataPosH.setEnabled(false);
@@ -600,31 +601,31 @@ public class Janela extends javax.swing.JFrame {
                 this.tempCoordNavio = this.jTextCruzadorCoord.getText();
                 this.tempPosNavioH = this.jRadioCruzadorPosH.isSelected();
                 comecou = partidaControl.posicionaNavio(Navio.CRUZADOR);
-
+                
                 if (comecou) {
                     //termina de desabilitar os componentes gráficos
                     this.jButtonIniciar.setEnabled(false);
-
+                    
                     this.jRadioCruzadorPosH.setEnabled(false);
                     this.jRadioCruzadorPosV.setEnabled(false);
                     this.jTextCruzadorCoord.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Informe corretamente o espaço do Cruzador", "Atenção", JOptionPane.WARNING_MESSAGE);
                 }
-
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Informe corretamente o espaço da Fragata", "Atenção", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Informe corretamente o espaço do Porta-aviões", "Atenção", JOptionPane.WARNING_MESSAGE);
         }
-
+        
         if (comecou) {
             this.jIniciaPartida();
         }
 
     }//GEN-LAST:event_jButtonIniciarActionPerformed
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
