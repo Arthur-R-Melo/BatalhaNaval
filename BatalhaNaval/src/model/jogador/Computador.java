@@ -33,8 +33,8 @@ public class Computador extends Jogador{
     private int[] sorteiaCoord() {
         Random r = new Random();
         int coord[] = new int[2];
-        coord[0] = r.nextInt(0, 9);
-        coord[1] = r.nextInt(0, 4);
+        coord[0] = r.nextInt(0, 10);
+        coord[1] = r.nextInt(0, 5);
         
         return coord;
     }
