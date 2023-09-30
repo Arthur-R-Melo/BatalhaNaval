@@ -20,7 +20,7 @@ public class Jogador {
         return controle.getDirecaoNavio();
     }
     
-    public int[] getParNavio(JogadorControl controle) throws NumberFormatException{
+    public int[] getParNavio(JogadorControl controle) throws NumberFormatException, StringIndexOutOfBoundsException{
         return controle.getParInicial();
     }
     

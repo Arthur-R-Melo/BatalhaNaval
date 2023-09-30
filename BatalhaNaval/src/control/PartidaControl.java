@@ -39,6 +39,8 @@ public class PartidaControl {
             return true;
         } catch (NumberFormatException e) {
             return false;
+        } catch (StringIndexOutOfBoundsException e) {
+            return false;
         }
     }
 

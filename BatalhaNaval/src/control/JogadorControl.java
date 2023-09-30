@@ -19,7 +19,7 @@ public class JogadorControl {
         return this.origem.getCoordAtk();
     }
     
-    public int[] getParInicial() throws NumberFormatException{
+    public int[] getParInicial() throws NumberFormatException, StringIndexOutOfBoundsException{
         return TabuleiroControl.convertePosicao(this.origem.getTempCoordNavio());
     }
     
