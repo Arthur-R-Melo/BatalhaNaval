@@ -19,7 +19,28 @@ public class TabuleiroControl {
         this.tabuleiro = tabuleiro;
     }
     public boolean validaPosicionamento(Navio navio, int parOrdenado[], boolean direcao) {
-        //TODO
+        if(parOrdenado[0] < 0 || parOrdenado[1] < 0) {
+            return false;
+        }
+        if(direcao) {
+            if(parOrdenado[0] + navio.getTam() > this.tabuleiro.getTab().length) {
+                return false;
+            }
+            for (int i = parOrdenado[0]; i < navio.getTam() + parOrdenado[0]; i++) {
+                if(this.tabuleiro.getTab()[i][parOrdenado[1]] == Tabuleiro.EM_BRANCO) {
+                    return false;
+                }
+            }
+        }else {
+            if(parOrdenado[1] + navio.getTam() > this.tabuleiro.getTab()[0].length) {
+                return false;
+            }
+            for (int i = parOrdenado[1]; i < navio.getTam() + parOrdenado[1]; i++) {
+                if(this.tabuleiro.getTab()[parOrdenado[0]][i] == Tabuleiro.EM_BRANCO) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
     public static int[] convertePosicao(String posicao) throws NumberFormatException {
