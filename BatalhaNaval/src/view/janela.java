@@ -195,9 +195,9 @@ public class Janela extends javax.swing.JFrame {
                     }
 
                     if (acabou) {
-                        String txt += partidaControl.getJogVitorioso() ? "Você ganhou!" : "Você perdeu!";
-                        JOptionPane.showMessageDialog(null, txt, "Vitória!",JOptionPane.OK_OPTION);
-                        //System.exit(0); //acabou
+                        String txt = partidaControl.getJogVitorioso() ? "Você ganhou!" : "Você perdeu!";
+                        JOptionPane.showMessageDialog(null, txt, "Vitória!",JOptionPane.INFORMATION_MESSAGE);
+                        System.exit(0); //acabou
                     }
                 }
 
