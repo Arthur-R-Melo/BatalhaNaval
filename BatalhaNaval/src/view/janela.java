@@ -186,6 +186,8 @@ public class Janela extends javax.swing.JFrame {
                     coordAtk[1] = Integer.parseInt(panel.getName().split(",")[1]);
                     boolean acabou = partidaControl.realizaJogada();
 
+                    //jLabelPlacarIA.setText(partidaControl.get);
+                    
                     atualizaTabuleiroJogador();
 
                     if (partidaControl.getValorCoord(1, partidaControl.getLastAtk()) == Tabuleiro.NAVIO_ACERTADO) {
