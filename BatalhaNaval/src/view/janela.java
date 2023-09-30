@@ -186,11 +186,10 @@ public class Janela extends javax.swing.JFrame {
                     coordAtk[1] = Integer.parseInt(panel.getName().split(",")[1]);
                     boolean acabou = partidaControl.realizaJogada();
 
-                    //jLabelPlacarIA.setText(partidaControl.get);
-                    
+
                     atualizaTabuleiroJogador();
 
-                    if (partidaControl.getValorCoord(1, partidaControl.getLastAtk()) == Tabuleiro.NAVIO_ACERTADO) {
+                    if (partidaControl.getValorCoord(1, coordAtk) == Tabuleiro.NAVIO_ACERTADO) {
                         panel.setBackground(NAVIO_ACERTADO);
                     } else {
                         panel.setBackground(TIRO_AGUA);
@@ -198,7 +197,7 @@ public class Janela extends javax.swing.JFrame {
 
                     if (acabou) {
                         String txt = partidaControl.getJogVitorioso() ? "Você ganhou!" : "Você perdeu!";
-                        JOptionPane.showMessageDialog(null, txt, "Vitória!",JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, txt, "Vitória!", JOptionPane.INFORMATION_MESSAGE);
                         System.exit(0); //acabou
                     }
                 }
