@@ -28,8 +28,14 @@ public class PartidaControl {
             JogadorControl jogCtrl = new JogadorControl(origem);
             for (Jogador jog : partida.getJogadores()) {
                 tabCtrl = new TabuleiroControl(jog.getTabuleiro());
-                parOrdenado = jog.getParNavio(jogCtrl);
                 direcao = jog.getDirecaoNavio(jogCtrl);
+                if(jog instanceof Computador) {
+                    do {                        
+                        parOrdenado = jog.getParNavio(jogCtrl);
+                    } while (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao));
+                } else {
+                    parOrdenado = jog.getParNavio(jogCtrl);
+                }
                 if (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao)) {
                     return false;
                 } else {
