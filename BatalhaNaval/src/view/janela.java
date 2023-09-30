@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import model.Navio;
 import model.Partida;
+import model.Tabuleiro;
 
 /**
  *
@@ -19,7 +20,13 @@ import model.Partida;
  */
 public class Janela extends javax.swing.JFrame {
 
+    public static final Color EM_BRANCO = new Color(230, 230, 230),
+            NAVIO = new Color(0, 153, 0),
+            TIRO_AGUA = new Color(0, 153, 155),
+            NAVIO_ACERTADO = new Color(204, 0, 0);
+
     private Partida partida;
+    private PartidaControl partidaControl;
 
     private JPanel[][] jPecasPlayer;
     private JPanel[][] JPecasIA;
@@ -98,7 +105,7 @@ public class Janela extends javax.swing.JFrame {
             JLabel posicaoTxt = new JLabel();
             posicaoTxt.setText(i + "");
             posicaoTxt.setSize(tamChar, tamChar);
-            posicaoTxt.setForeground(new java.awt.Color(230, 230, 230));
+            posicaoTxt.setForeground(EM_BRANCO);
             this.jPanelFundo.add(posicaoTxt);
 
             posicaoTxt.setLocation(((i - 1) * 50) + referencia.getX() + 5,
@@ -131,7 +138,7 @@ public class Janela extends javax.swing.JFrame {
             posicaoTxt.setText(letra + "");
 
             posicaoTxt.setSize(tamChar, tamChar);
-            posicaoTxt.setForeground(new java.awt.Color(230, 230, 230));
+            posicaoTxt.setForeground(EM_BRANCO);
             this.jPanelFundo.add(posicaoTxt);
 
             posicaoTxt.setLocation(referencia.getX() + referencia.getSize().width + 5, referencia.getY() + i * 50);
@@ -148,7 +155,7 @@ public class Janela extends javax.swing.JFrame {
             for (int y = 0; y < pecas[0].length; y++) {
                 //cria todos os panels de cada tabuleiro e inicia suas configurações iniciais
                 pecas[x][y] = new JPanel();
-                pecas[x][y].setBackground(new java.awt.Color(230, 230, 230));
+                pecas[x][y].setBackground(EM_BRANCO);
                 pecas[x][y].setSize(50, 50);
                 pecas[x][y].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -170,6 +177,7 @@ public class Janela extends javax.swing.JFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                //TODO
                 panel.setBackground(Color.red);
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     panel.setBackground(Color.blue);
@@ -192,9 +200,34 @@ public class Janela extends javax.swing.JFrame {
         });
     }
 
-    private void jIniciaPartida() {
+    private void atualizaTabuleiroJogador() {
+        int[][] vetTab = this.partidaControl.getTabuleiro(0).getTab();
+        for (int x = 0; x < vetTab.length; x++) {
+            for (int y = 0; y < vetTab[0].length; y++) {
 
+                switch (vetTab[x][y]) {
+                    case Tabuleiro.EM_BRANCO:
+                        this.jPecasPlayer[x][y].setBackground(EM_BRANCO);
+                        break;
+                    case Tabuleiro.NAVIO:
+                        this.jPecasPlayer[x][y].setBackground(NAVIO);
+                        break;
+                    case Tabuleiro.TIRO_AGUA:
+                        this.jPecasPlayer[x][y].setBackground(TIRO_AGUA);
+                        break;
+                    case Tabuleiro.NAVIO_ACERTADO:
+                        this.jPecasPlayer[x][y].setBackground(NAVIO_ACERTADO);
+                        break;
+
+                }
+            }
+        }
+    }
+
+    private void jIniciaPartida() {
         this.setVisibleJogada(true);
+        this.atualizaTabuleiroJogador();
+        
         // define os panels do tabuleiro inimigo para poderem serem setados
         for (JPanel[] vet : this.JPecasIA) {
             for (JPanel panel : vet) {
@@ -518,13 +551,13 @@ public class Janela extends javax.swing.JFrame {
         //TODO
 
         this.partida = new Partida();
-        PartidaControl pc = new PartidaControl(this);
+        this.partidaControl = new PartidaControl(this);
         boolean comecou; //para verificar se não ocorreu erro
 
         //verifica se porta aviões está ok
         this.tempCoordNavio = this.jTextPortAviaoCoord.getText();
         this.tempPosNavioH = this.jRadioPortAviaoPosH.isSelected();
-        comecou = pc.posicionaNavio(Navio.PORTA_AVIOES);
+        comecou = partidaControl.posicionaNavio(Navio.PORTA_AVIOES);
 
         if (comecou) {
             //desabilita os espaços do porta avioes para evitar futuros erros
@@ -535,7 +568,7 @@ public class Janela extends javax.swing.JFrame {
             //verifica se fragata está ok
             this.tempCoordNavio = this.jTextFragataCoord.getText();
             this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
-            comecou = pc.posicionaNavio(Navio.FRAGATA);
+            comecou = partidaControl.posicionaNavio(Navio.FRAGATA);
 
             if (comecou) {
                 //desabilita os componentes graficos da fragata
@@ -546,7 +579,7 @@ public class Janela extends javax.swing.JFrame {
                 //verifica se cruzador está ok
                 this.tempCoordNavio = this.jTextCruzadorCoord.getText();
                 this.tempPosNavioH = this.jRadioCruzadorPosH.isSelected();
-                comecou = pc.posicionaNavio(Navio.CRUZADOR);
+                comecou = partidaControl.posicionaNavio(Navio.CRUZADOR);
 
                 if (comecou) {
                     //termina de desabilitar os componentes gráficos
