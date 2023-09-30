@@ -32,6 +32,9 @@ public class Partida {
 
         parOrdenado = this.jogadores[i].realizaAtaque(jogControl);
         int temp = i == 0 ? 1 : 0;//Tem como função pegar o indice do outro jogador
+        if(this.jogadores[i] instanceof Computador) {
+            this.lastAtk = parOrdenado.clone();
+        }
         if (this.jogadores[temp].getTabuleiro().recebeTiro(parOrdenado)) {
             this.jogadores[temp].destroiParte();
         }
