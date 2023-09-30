@@ -27,11 +27,11 @@ public class Tabuleiro {
     public void posicionaNavio(Navio navio, int parOrdenado[], boolean direcaoH) {
         if(direcaoH) {
             for (int i = parOrdenado[1]; i < navio.getTam() + parOrdenado[1]; i++) {
-                this.tab[i][parOrdenado[0]] = NAVIO;
+                this.tab[i][parOrdenado[1]] = NAVIO;
             }
         }else {
             for (int i = parOrdenado[0]; i < navio.getTam() + parOrdenado[0]; i++) {
-                this.tab[parOrdenado[1]][i] = NAVIO;
+                this.tab[parOrdenado[0]][i] = NAVIO;
             }
         }
     }
