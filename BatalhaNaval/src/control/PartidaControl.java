@@ -7,6 +7,7 @@ package control;
 import model.Navio;
 import model.Partida;
 import model.Tabuleiro;
+import model.jogador.Computador;
 import model.jogador.Jogador;
 import view.Janela;
 
@@ -45,12 +46,14 @@ public class PartidaControl {
         }
     }
 
-    public boolean realizaJogada(int i) {
-        //TODO
+    public boolean realizaJogada() {
         Partida partida = this.origem.getPartida();
-        partida.realizaRodada(new JogadorControl(origem), i);
-        int temp = i == 1 ? 0 : 1;
-        return true;
+        for (int i = 0; i < partida.getJogadores().length; i++) {
+            if(partida.realizaRodada(new JogadorControl(origem), i)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Tabuleiro getTabuleiro(int indice) {
@@ -66,5 +69,14 @@ public class PartidaControl {
     public int getValorCoord(int indiceJog, int[] parOrdenado) {
         Partida partida = this.origem.getPartida();
         return partida.getJogadores()[indiceJog].getTabuleiro().getCoord(parOrdenado);
+    }
+    
+    
+    /*
+    Retorna verdadeiro caso o jogador viorioso seja o usuário e falso caso seja a IA
+    */
+    public boolean getJogVitorioso()  {
+        Partida partida = this.origem.getPartida();
+        return !(partida.getJogVitorioso() instanceof Computador);
     }
 }
