@@ -185,13 +185,19 @@ public class Janela extends javax.swing.JFrame {
                     coordAtk[0] = Integer.parseInt(panel.getName().split(",")[0]);
                     coordAtk[1] = Integer.parseInt(panel.getName().split(",")[1]);
                     boolean acabou = partidaControl.realizaJogada();
-                    
+
                     atualizaTabuleiroJogador();
 
                     if (partidaControl.getValorCoord(1, partidaControl.getLastAtk()) == Tabuleiro.NAVIO_ACERTADO) {
                         panel.setBackground(NAVIO_ACERTADO);
                     } else {
                         panel.setBackground(TIRO_AGUA);
+                    }
+
+                    if (acabou) {
+                        String txt += partidaControl.getJogVitorioso() ? "Você ganhou!" : "Você perdeu!";
+                        JOptionPane.showMessageDialog(null, txt, "Vitória!",JOptionPane.OK_OPTION);
+                        //System.exit(0); //acabou
                     }
                 }
 
