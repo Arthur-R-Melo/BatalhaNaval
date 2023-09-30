@@ -15,15 +15,12 @@ public class TabuleiroControl {
         this.tabuleiro = tabuleiro;
     }
     public boolean validaPosicionamento(Navio navio, int parOrdenado[], boolean direcao) {
-        if(parOrdenado[0] < 0 || parOrdenado[1] < 0) {
-            return false;
-        }
         if(direcao) {
             if(parOrdenado[0] + navio.getTam() > this.tabuleiro.getTab().length) {
                 return false;
             }
             for (int i = parOrdenado[0]; i < navio.getTam() + parOrdenado[0]; i++) {
-                if(this.tabuleiro.getTab()[i][parOrdenado[1]] == Tabuleiro.EM_BRANCO) {
+                if(this.tabuleiro.getTab()[i][parOrdenado[1]] != Tabuleiro.EM_BRANCO) {
                     return false;
                 }
             }
@@ -32,7 +29,7 @@ public class TabuleiroControl {
                 return false;
             }
             for (int i = parOrdenado[1]; i < navio.getTam() + parOrdenado[1]; i++) {
-                if(this.tabuleiro.getTab()[parOrdenado[0]][i] == Tabuleiro.EM_BRANCO) {
+                if(this.tabuleiro.getTab()[parOrdenado[0]][i] != Tabuleiro.EM_BRANCO) {
                     return false;
                 }
             }
@@ -43,7 +40,7 @@ public class TabuleiroControl {
         int vet[] = new int[2];
         char y = posicao.toLowerCase().charAt(0);
         vet[1] = (int) y - (int) 'a';
-        if(vet[1] > 0 || vet[1] > 4) {
+        if(vet[1] < 0 || vet[1] > 4) {
             throw new NumberFormatException();
         }
         /*
@@ -51,7 +48,7 @@ public class TabuleiroControl {
                 do caractere 2
          */
         vet[0] = Integer.parseInt(posicao.substring(1)) - 1;
-        if(vet[0] > 0 || vet[0] > 9) {
+        if(vet[0] < 0 || vet[0] > 9) {
             throw new NumberFormatException();
         }
         return vet;
