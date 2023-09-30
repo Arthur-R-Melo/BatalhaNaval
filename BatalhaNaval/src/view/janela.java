@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import model.Navio;
@@ -192,6 +193,7 @@ public class Janela extends javax.swing.JFrame {
     }
 
     private void jIniciaPartida() {
+
         this.setVisibleJogada(true);
         // define os panels do tabuleiro inimigo para poderem serem setados
         for (JPanel[] vet : this.JPecasIA) {
@@ -208,21 +210,6 @@ public class Janela extends javax.swing.JFrame {
         this.jLabelP.setVisible(op);
         this.jTabuleiroIA.setVisible(op);
         this.setLabelsVisible(jLabelsCoordIA, op);
-    }
-
-    private void setEnabledPosiconamento(boolean op) {
-        this.jButtonIniciar.setEnabled(op);
-
-        this.jRadioCruzadorPosH.setEnabled(op);
-        this.jRadioCruzadorPosV.setEnabled(op);
-        this.jRadioPortAviaoPosH.setEnabled(op);
-        this.jRadioPortAviaoPosV.setEnabled(op);
-        this.jRadioFragataPosH.setEnabled(op);
-        this.jRadioFragataPosV.setEnabled(op);
-
-        this.jTextPortAviaoCoord.setEnabled(op);
-        this.jTextFragataCoord.setEnabled(op);
-        this.jTextCruzadorCoord.setEnabled(op);
     }
 
     @SuppressWarnings("unchecked")
@@ -314,11 +301,6 @@ public class Janela extends javax.swing.JFrame {
         jRadioPortAviaoPosV.setForeground(new java.awt.Color(230, 230, 230));
         jRadioPortAviaoPosV.setText("V");
         jRadioPortAviaoPosV.setContentAreaFilled(false);
-        jRadioPortAviaoPosV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioPortAviaoPosVActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(230, 230, 230));
@@ -534,32 +516,59 @@ public class Janela extends javax.swing.JFrame {
 
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
         //TODO
-        
-        /*this.partida = new Partida();
+
+        this.partida = new Partida();
         PartidaControl pc = new PartidaControl(this);
         boolean comecou; //para verificar se não ocorreu erro
 
         //verifica se porta aviões está ok
-        this.tempCoordNavio = this.jTextPortAviaoCoord.getText();
+        this.tempCoordNavio = this.jTextPortAviaoCoord.getText() != null ? this.jTextPortAviaoCoord.getText() : "";
         this.tempPosNavioH = this.jRadioPortAviaoPosH.isSelected();
         comecou = pc.posicionaNavio(Navio.PORTA_AVIOES);
 
         if (comecou) {
+            //desabilita os espaços do porta avioes para evitar futuros erros
+            this.jRadioPortAviaoPosH.setEnabled(false);
+            this.jRadioPortAviaoPosV.setEnabled(false);
+            this.jTextPortAviaoCoord.setEnabled(false);
+
             //verifica se fragata está ok
-            this.tempCoordNavio = this.jTextFragataCoord.getText();
+            this.tempCoordNavio = this.jTextFragataCoord.getText() != null ? this.jTextFragataCoord.getText() : "";
             this.tempPosNavioH = this.jRadioFragataPosH.isSelected();
             comecou = pc.posicionaNavio(Navio.FRAGATA);
 
             if (comecou) {
+                //desabilita os componentes graficos da fragata
+                this.jRadioFragataPosH.setEnabled(false);
+                this.jRadioFragataPosV.setEnabled(false);
+                this.jTextFragataCoord.setEnabled(false);
+
                 //verifica se cruzador está ok
                 this.tempCoordNavio = this.jTextCruzadorCoord.getText();
                 this.tempPosNavioH = this.jRadioCruzadorPosH.isSelected();
                 comecou = pc.posicionaNavio(Navio.CRUZADOR);
-            }
-        }*/
 
-        this.setEnabledPosiconamento(false);
-        this.jIniciaPartida();
+                if (comecou) {
+                    //termina de desabilitar os componentes gráficos
+                    this.jButtonIniciar.setEnabled(false);
+
+                    this.jRadioCruzadorPosH.setEnabled(false);
+                    this.jRadioCruzadorPosV.setEnabled(false);
+                    this.jTextCruzadorCoord.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Informe corretamente o espaço do Cruzador", "Atenção", JOptionPane.WARNING_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Informe corretamente o espaço da Fragata", "Atenção", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Informe corretamente o espaço do Porta-aviões", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+
+        if (comecou) {
+            this.jIniciaPartida();
+        }
 
     }//GEN-LAST:event_jButtonIniciarActionPerformed
 
