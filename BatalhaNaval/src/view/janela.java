@@ -48,6 +48,8 @@ public class Janela extends javax.swing.JFrame {
     }
 
     private void config() {
+        this.coordAtk = new int[2];
+
         this.setLocationRelativeTo(null);
 
         //criando e atribuindo os Button Groups
@@ -86,7 +88,6 @@ public class Janela extends javax.swing.JFrame {
         grupo = new ButtonGroup();
         grupo.add(bot1);
         grupo.add(bot2);
-
     }
 
     private void setLabelsVisible(ArrayList<JLabel> vet, boolean op) {
@@ -96,6 +97,8 @@ public class Janela extends javax.swing.JFrame {
     }
 
     private ArrayList<JLabel> escrevaCoord(JPanel referencia) {
+        //escreve as coords no panel e retorna uma arrayList para poderem ser modificadas dps
+
         ArrayList vetorLabel = new ArrayList();
 
         int tamChar = 20;
@@ -178,10 +181,26 @@ public class Janela extends javax.swing.JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 //TODO
-                panel.setBackground(Color.red);
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    panel.setBackground(Color.blue);
+                if (panel.getBackground() == EM_BRANCO) {
+                    coordAtk[0] = Integer.parseInt(panel.getName().split(",")[0]);
+                    coordAtk[1] = Integer.parseInt(panel.getName().split(",")[1]);
+                    boolean acabou = partidaControl.realizaJogada();
+
+                    atualizaTabuleiroJogador();
+
+                    if (partidaControl.getValorCoord(1, partidaControl.getLastAtk()) == Tabuleiro.NAVIO_ACERTADO) {
+                        panel.setBackground(NAVIO_ACERTADO);
+                    } else {
+                        panel.setBackground(TIRO_AGUA);
+                    }
+
+                    if (acabou) {
+                        String txt = partidaControl.getJogVitorioso() ? "Você ganhou!" : "Você perdeu!";
+                        JOptionPane.showMessageDialog(null, txt, "Vitória!",JOptionPane.INFORMATION_MESSAGE);
+                        System.exit(0); //acabou
+                    }
                 }
+
             }
 
             @Override
@@ -227,7 +246,7 @@ public class Janela extends javax.swing.JFrame {
     private void jIniciaPartida() {
         this.setVisibleJogada(true);
         this.atualizaTabuleiroJogador();
-        
+
         // define os panels do tabuleiro inimigo para poderem serem setados
         for (JPanel[] vet : this.JPecasIA) {
             for (JPanel panel : vet) {
