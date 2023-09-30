@@ -12,11 +12,9 @@ public class Partida {
 
     private final Jogador jogadores[];
     private final int TOTAL_DE_PARTES = Navio.CRUZADOR.getTam() + Navio.FRAGATA.getTam() + Navio.PORTA_AVIOES.getTam();
-    private int[] lastAtk;
     private Jogador jogVitorioso;
 
     public Partida() {
-        this.lastAtk = new int[2];
         this.jogadores = new Jogador[2];
         this.jogadores[0] = new Jogador();
         this.jogadores[1] = new Computador();
@@ -38,7 +36,6 @@ public class Partida {
                     this.jogadores[temp].getTabuleiro().getCoord(parOrdenado) == Tabuleiro.TIRO_AGUA) {
                 parOrdenado = this.jogadores[i].realizaAtaque(jogControl);
             }
-            this.lastAtk = parOrdenado.clone();
         }
         if (this.jogadores[temp].getTabuleiro().recebeTiro(parOrdenado)) {
             this.jogadores[temp].destroiParte();
@@ -56,10 +53,6 @@ public class Partida {
 
     public boolean validaVitoria(Jogador jog) {
         return jog.getParteDestruidas() == TOTAL_DE_PARTES;
-    }
-
-    public int[] getLastAtk() {
-        return lastAtk;
     }
 
     public Jogador getJogVitorioso() {

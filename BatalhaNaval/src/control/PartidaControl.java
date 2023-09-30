@@ -65,11 +65,6 @@ public class PartidaControl {
         return partida.getJogadores()[indice].getTabuleiro();
     }
 
-    public int[] getLastAtk() {
-        Partida partida = this.origem.getPartida();
-        return partida.getLastAtk();
-    }
-
     public int getValorCoord(int indiceJog, int[] parOrdenado) {
         Partida partida = this.origem.getPartida();
         return partida.getJogadores()[indiceJog].getTabuleiro().getCoord(parOrdenado);
@@ -82,5 +77,11 @@ public class PartidaControl {
     public boolean getJogVitorioso()  {
         Partida partida = this.origem.getPartida();
         return !(partida.getJogVitorioso() instanceof Computador);
+    }
+    
+    public int partesDestruidas(int i) {
+        Partida partida = this.origem.getPartida();
+        int temp = i == 1? 0:1;
+        return partida.getJogadores()[temp].getParteDestruidas();
     }
 }
