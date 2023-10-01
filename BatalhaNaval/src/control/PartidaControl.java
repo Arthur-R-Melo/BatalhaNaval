@@ -54,6 +54,7 @@ public class PartidaControl {
             j=i == 0 ? 1 : 0;//Tem como função pegar o indice do outro jogador
             partida.realizaRodada(new JogadorControl(origem), i, j);
             if(partida.validaVitoria(partida.getJogadores()[j])) {
+                partida.setJogVitorioso(partida.getJogadores()[i]);
                 return true;
             }
         }

@@ -8,7 +8,7 @@ import model.Tabuleiro;
  * @author Arthur
  */
 public class Jogador {
-    protected int parteDestruidas;
+    protected int parteDestruidas; // Quantidade de partes que o jogador teve destruida pelo adversário
     protected Tabuleiro tabuleiro;
     
     public Jogador() {

@@ -53,4 +53,7 @@ public class Partida {
         return jogVitorioso;
     }
 
+    public void setJogVitorioso(Jogador jogVitorioso) {
+        this.jogVitorioso = jogVitorioso;
+    }
 }
