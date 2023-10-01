@@ -25,26 +25,20 @@ public class Partida {
     Realiza a jogada de um jogador, alterando a respectiva posiçao do ataque
     e retorna caso ocorra uma vitória
     */
-    public boolean realizaRodada(JogadorControl jogControl, int i) {
+    public void realizaRodada(JogadorControl jogControl, int i, int j) {
         int parOrdenado[];
-        int temp = i == 0 ? 1 : 0;//Tem como função pegar o indice do outro jogador
 
         parOrdenado = this.jogadores[i].realizaAtaque(jogControl);
         
         if(this.jogadores[i] instanceof Computador) {
-            while (this.jogadores[temp].getTabuleiro().getCoord(parOrdenado) == Tabuleiro.NAVIO_ACERTADO ||
-                    this.jogadores[temp].getTabuleiro().getCoord(parOrdenado) == Tabuleiro.TIRO_AGUA) {
+            while (this.jogadores[j].getTabuleiro().getCoord(parOrdenado) == Tabuleiro.NAVIO_ACERTADO ||
+                    this.jogadores[j].getTabuleiro().getCoord(parOrdenado) == Tabuleiro.TIRO_AGUA) {
                 parOrdenado = this.jogadores[i].realizaAtaque(jogControl);
             }
         }
-        if (this.jogadores[temp].getTabuleiro().recebeTiro(parOrdenado)) {
-            this.jogadores[temp].destroiParte();
+        if (this.jogadores[j].getTabuleiro().recebeTiro(parOrdenado)) {
+            this.jogadores[j].destroiParte();
         }
-        if (validaVitoria(this.jogadores[temp])) {
-            this.jogVitorioso = this.jogadores[i];
-            return true;
-        }
-        return false;
     }
 
     public Jogador[] getJogadores() {

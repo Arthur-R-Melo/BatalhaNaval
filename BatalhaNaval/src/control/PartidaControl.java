@@ -29,12 +29,11 @@ public class PartidaControl {
             for (Jogador jog : partida.getJogadores()) {
                 tabCtrl = new TabuleiroControl(jog.getTabuleiro());
                 direcao = jog.getDirecaoNavio(jogCtrl);
+                parOrdenado = jog.getParNavio(jogCtrl);
                 if(jog instanceof Computador) {
-                    do {                        
+                    while (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao)) {                        
                         parOrdenado = jog.getParNavio(jogCtrl);
-                    } while (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao));
-                } else {
-                    parOrdenado = jog.getParNavio(jogCtrl);
+                    }
                 }
                 if (!tabCtrl.validaPosicionamento(navio, parOrdenado, direcao)) {
                     return false;
@@ -43,17 +42,18 @@ public class PartidaControl {
                 }
             }
             return true;
-        } catch (NumberFormatException e) {
-            return false;
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             return false;
         }
     }
 
     public boolean realizaJogada() {
         Partida partida = this.origem.getPartida();
+        int j;
         for (int i = 0; i < partida.getJogadores().length; i++) {
-            if(partida.realizaRodada(new JogadorControl(origem), i)) {
+            j=i == 0 ? 1 : 0;//Tem como função pegar o indice do outro jogador
+            partida.realizaRodada(new JogadorControl(origem), i, j);
+            if(partida.validaVitoria(partida.getJogadores()[j])) {
                 return true;
             }
         }
