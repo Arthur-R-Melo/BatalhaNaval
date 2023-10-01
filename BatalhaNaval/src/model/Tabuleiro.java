@@ -17,9 +17,6 @@ public class Tabuleiro {
             }
         }
     }
-    /*
-        A String posicao deve ser formatada como letra(a, b, c, d, e)+ numero (from 1 to 10) como em: a1, b5, e10.
-     */
     public void posicionaNavio(Navio navio, int parOrdenado[], boolean direcaoH) {
         if(direcaoH) {
             for (int i = parOrdenado[0]; i < navio.getTam() + parOrdenado[0]; i++) {
@@ -33,9 +30,9 @@ public class Tabuleiro {
     }
     
     /*
-        Retorna verdadeiro caso atinja um navio, falso caso erre e nulo caso ocorra um erro
+        Retorna verdadeiro caso atinja um navio, falso caso erre
      */
-    public boolean recebeTiro(int parOrdenado[]) {//true = acertou navio | false = não acertou um navio
+    public boolean recebeTiro(int parOrdenado[]) {
 
         if (this.getCoord(parOrdenado) == Tabuleiro.NAVIO) {
             this.tab[parOrdenado[0]][parOrdenado[1]] = NAVIO_ACERTADO;
