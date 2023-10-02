@@ -22,7 +22,7 @@ public class Janela extends javax.swing.JFrame {
 
     public static final Color EM_BRANCO = new Color(230, 230, 230),
             NAVIO = new Color(0, 153, 0),
-            TIRO_AGUA = new Color(0, 153, 155),
+            TIRO_AGUA = new Color(0, 153, 255),
             NAVIO_ACERTADO = new Color(204, 0, 0);
 
     private Partida partida;
