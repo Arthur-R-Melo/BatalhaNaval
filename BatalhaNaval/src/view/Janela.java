@@ -612,10 +612,12 @@ public class Janela extends javax.swing.JFrame {
                     this.jTextCruzadorCoord.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Informe corretamente o espaço do Cruzador", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    this.atualizaTabuleiroJogador();
                 }
 
             } else {
                 JOptionPane.showMessageDialog(this, "Informe corretamente o espaço da Fragata", "Atenção", JOptionPane.WARNING_MESSAGE);
+                this.atualizaTabuleiroJogador();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Informe corretamente o espaço do Porta-aviões", "Atenção", JOptionPane.WARNING_MESSAGE);
